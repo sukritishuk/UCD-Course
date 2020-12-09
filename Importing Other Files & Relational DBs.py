@@ -1,5 +1,5 @@
 print('Hello')
 
-print('My World')
-
+a = ['Tom', 32,'Alice']
+print(a)
 
