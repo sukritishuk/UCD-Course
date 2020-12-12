@@ -178,3 +178,56 @@ stream = tweepy.Stream(auth, l)
 
 # Filter Twitter Streams to capture data by the keywords:
 stream.filter(['clinton','trump','sanders','cruz'])
+
+## Load & explore your Twitter data -
+# Import package
+import json
+# Define file path
+tweets_data_path = 'tweets.txt'
+# Initialize empty list to store tweets:
+tweets_data = []
+# Open connection to file
+tweets_file = open(tweets_data_path,'r')
+# Read in tweets and store in list
+for line in tweets_file:
+    tweet = json_loads(line)
+    tweets_data.append(tweet)
+# Close connection to file
+tweets_file.close()
+# Print the keys of the first tweet dict
+print(tweets_data[0].keys())
+
+
+# Importing Data in Python - Practice
+# Example 1 -
+from bs4 import BeautifulSoup
+import requests
+url = 'https://www.python.org/~guido'
+r = requests.get(url)
+d = r.text
+s = BeautifulSoup(d)
+print(type(r))
+
+# Example 2 -
+import pandas as pd
+from urllib.request import urlretrieve
+url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'
+urlretrieve(url,'winequality-wh.csv')
+data = pd.read_csv('winequality-wh.csv',sep=';')
+print(data[['alcohol','quality']].head())
+
+
+# Example 3 -
+import requests
+url = ('http://www.omdbapi.com/?apikey=72bc447a&t=the+social+network')
+r = requests.get(url)
+json_data = r.json()
+print(json_data['Awards'])
+
+# Example 4 -
+url = 'https://www.python.org/~guido/'
+r = requests.get(url)
+html_doc = r.text
+s = BeautifulSoup(html_doc)
+print(s.title)
+
