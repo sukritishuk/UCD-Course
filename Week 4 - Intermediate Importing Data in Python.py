@@ -231,3 +231,101 @@ html_doc = r.text
 s = BeautifulSoup(html_doc)
 print(s.title)
 
+
+## Coonect to SQL DB Practice -
+# Example - 1
+import pymysql
+# database connection -
+connection = pymysql.connect(host='localhost',user='root',passwd="",database="hospital_info")
+cursor = connection.cursor()
+# retrieve data from table -
+retrieve = "SELECT * FROM doctor;"
+# executing the query
+cursor.execute(retrieve)
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+# commit the connection -
+connection.commit()
+# close the connection -
+connection.close()
+
+# Example - 2
+connection = pymysql.connect(host='localhost',user='root',passwd="",database="hospital_info")
+cursor = connection.cursor()
+# getting all tables present in hospital_info DB -
+cursor.execute("SHOW TABLES;")
+# print all tables in DB -
+names_table = cursor.fetchall()
+for table in names_table:
+    print(table)
+
+# Example - 3
+import pandas as pd
+connection = pymysql.connect(host='localhost',user='root',passwd="",database="hospital_info")
+cursor = connection.cursor()
+# getting all tables present in hospital_info DB -
+cursor.execute("SELECT * FROM doctor;")
+df = pd.DataFrame(cursor.fetchall())
+# name the columns and set index column -
+df.columns = ['Doctor_Id','Doctor_Name','Hospital_Id','Joining_Date','Speciality','Salary','Experience']
+df = df.set_index(['Doctor_Id'])
+print(df)
+
+
+## Scraping the web in Python Practice -
+# Scraping the Monster Job Site -
+import requests
+URL = 'https://www.monster.com/jobs/search/?q=Software-Developer&where=Australia'
+page = requests.get(URL)
+# parse HTML code with BeautifulSoup -
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(page.content,'html.parser')
+# print the title of web page -
+print(soup.title)
+# print the text on the page -
+print(soup.get_text())
+# iterate through all of the hyperlinks on the page and print their URLs -
+for link in soup.find_all('a'):
+    print(link.get('href'))
+# finding elements by ID & prettifying it -
+results = soup.find(id='ResultsContainer')
+print(results.prettify())
+# find Elements by HTML Class Name - select only the job postings:
+job_elems = results.find_all('section', class_='card-content')
+print(job_elems)
+
+for job_elem in job_elems:
+    # Each job_elem is a new BeautifulSoup object.
+    # You can use the same methods on it as you did before.
+    title_elem = job_elem.find('h2', class_='title')
+    company_elem = job_elem.find('div', class_='company')
+    location_elem = job_elem.find('div', class_='location')
+    print(title_elem)
+    print(company_elem)
+    print(location_elem)
+    print()
+
+# Extract Text From HTML Elements - using .text
+for job_elem in job_elems:
+    title_elem = job_elem.find('h2', class_='title')
+    company_elem = job_elem.find('div', class_='company')
+    location_elem = job_elem.find('div', class_='location')
+    if None in (title_elem, company_elem, location_elem):
+        continue   # disregard the problematic element and skip over it
+    print(title_elem.text)
+    print(company_elem.text)
+    print(location_elem.text)
+    print()
+
+# Find Elements by Class Name and Text Content
+#  job titles in the page are kept within <h2> elements
+python_jobs = results.find_all('h2', string='Python Developer')
+
+
+
+
+
+
+
+
