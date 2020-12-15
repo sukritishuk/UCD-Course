@@ -2,7 +2,7 @@
 from urllib.request import urlretrieve
 url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'
 print(url)
-urlretrieve(url,'winequality-white.csv')
+urlretrieve(url, 'Files/winequality-white.csv')
 
 # Example2 - Import Red Wine Data from Web
 import pandas as pd
@@ -323,7 +323,44 @@ for job_elem in job_elems:
 python_jobs = results.find_all('h2', string='Python Developer')
 
 
+## Working with APIs in Python -
+# Implementation of GET request
+import requests
+response = requests.get('https://google.com/')
+print(response)
+# view the status of the response code
+print(response.status_code)
+# Using Response instance in a conditional expression
+if response:
+    print('Response is successful')
+else:
+    print('Request returned an error')
 
+
+# Example 1 - API serving NASA’s awesome data
+import requests
+request = requests.get('http://api.open-notify.org')
+print(request.text)
+print(request.status_code)
+# hit a fake end point that does not exist
+request2 = requests.get('http://api.open-notify.org/fake-endpoint')
+print(request2.status_code)
+# number of astronauts in the space
+people = requests.get('http://api.open-notify.org/astros.json')
+print(people.text)
+# make output more readable using .json method
+people_json = people.json()
+print(people_json)
+# print the number of people in space
+print('Number of people in space:',people_json['number'])
+# print the name of people in space (using for loop)
+for p in people_json['people']:
+    print(p['name'])
+# International Space Station Current Location
+import requests
+data = requests.get("http://api.open-notify.org/iss-now.json")
+print(data.status_code)
+print(data.text)
 
 
 
