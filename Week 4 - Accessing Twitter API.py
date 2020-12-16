@@ -82,7 +82,6 @@ except BaseException as e:
 # print the tweet dataframe
 print(tweets_df)
 
-
 # Step 12 - scraping tweets from a text search query:
 # Scrape the 10 most recent tweets that were relevant to the 2020 US Election
 text_query = '2020 US Election'
